@@ -75,6 +75,10 @@ public class Cliente {
     public void setRazon(String razon) {
         this.razon = razon;
     }
+
+    public Object getdni() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 
 }
