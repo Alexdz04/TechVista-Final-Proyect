@@ -17,7 +17,7 @@ public class ProductosDao {
     ResultSet rs;
     
     public boolean RegistrarProductos(Productos pro){
-        String sql = "INSERT INTO productos (codigo, nombre, proveedor, stock, precio) VALUES (?, ?,?,?,?)";
+        String sql = "INSERT INTO productos (codigo, nombre, proveedor, stock, precio) VALUES (?,?,?,?,?)";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -44,7 +44,7 @@ public class ProductosDao {
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                proveedor.addItem(rs.getString("nombre"));
+               proveedor.addItem(rs.getString("nombre"));
             }
             } catch (SQLException e) {
                 System.out.println(e.toString());
@@ -67,9 +67,7 @@ public class ProductosDao {
                 pro.setStock(rs.getInt("stock"));
                 pro.setPrecio(rs.getDouble("precio"));
                 Listapro.add(pro);
-                
-                
-                
+               
             }
             
         } catch (SQLException e) {  
@@ -98,5 +96,49 @@ public boolean EliminarProductos(int id){
         }
     }
 }
+
+    public boolean ModificarProductos(Productos pro){
+    
+    String sql = "UPDATE productos  SET codigo=?, nombre=?, proveedor=?, stock=?, precio=? WHERE id=?";
+    try {
+        ps = con.prepareStatement(sql); 
+        ps.setString(1, pro.getCodigo());
+        ps.setString(2, pro.getNombre());
+        ps.setString(3, pro.getProveedor());
+        ps.setInt(4, pro.getStock());
+        ps.setDouble(5, pro.getPrecio());
+        ps.setInt(6, pro.getId());
+        ps.execute();
+        return true;
+    } catch (SQLException e) {
+        System.out.println(e.toString());
+        return false;
+    }finally{
+        try {
+            con.close();
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+        }
+    }
+}
+    
+    public Productos BuscarPro(String cod){
+        Productos producto = new Productos();
+        String sql = "SELECT * FROM productos WHERE codigo = ?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cod);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                producto.setNombre(rs.getString("nombre"));
+                producto.setPrecio(rs.getDouble("precio"));
+                producto.setStock(rs.getInt("stock"));
+            }
+            } catch (SQLException e) {
+                System.out.println(e.toString());
+            }
+        return producto;
+    }
     
 }

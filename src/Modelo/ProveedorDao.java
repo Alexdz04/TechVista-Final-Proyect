@@ -50,6 +50,7 @@ public class ProveedorDao {
             while (rs.next()) {
                 Proveedor pr = new Proveedor();
                 pr.setId(rs.getInt("Id"));
+                pr.setRuc(rs.getInt("ruc"));
                 pr.setNombre(rs.getString("nombre"));
                 pr.setTelefono(rs.getString("telefono"));
                 pr.setDireccion(rs.getString("direccion"));
@@ -95,7 +96,7 @@ public class ProveedorDao {
             ps.setString(3, pr.getTelefono());
             ps.setString(4, pr.getDireccion());
             ps.setString(5, pr.getRazon());
-            ps.setInt(5, pr.getId());
+            ps.setInt(6, pr.getId());
             ps.execute();
             return true;
         } catch (SQLException e) {
